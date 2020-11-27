@@ -1,0 +1,22 @@
+<% content_for :title, 'Edit User' %>
+<h1>Edit User <span class="text-secondary"><%= @user.username %></span></h1>
+
+<h2>Change Password</h2>
+<%= bootstrap_form_with url: update_password_path(@user), method: :patch, local: true do |form| %>
+    <% unless this_user.permission? :admin %>
+        <%= form.password_field :old_password %>
+    <% end %>
+    <%= form.password_field :password %>
+    <%= form.password_field :password_confirmation %>
+    <%= form.primary 'Change Password' %>
+<% end %>
+
+<% if this_user.permission? :admin %>
+    <hr />
+    <h2>Update Permission</h2>
+    <%= bootstrap_form_with url: update_permission_path(@user), method: :patch, local: true do |form| %>
+        <%= form.select :permission,
+           options_for_select(User.permissions.map { |name, _| name == @user.permission ? [name, name, { selected: :selected }] : name }) %>
+        <%= form.submit 'Update Permission', class: 'btn btn-warning' %>
+    <% end %>
+<% end %>

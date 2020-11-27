@@ -1,0 +1,26 @@
+<%= content_for :header, javascript_pack_tag('editor', 'data-turbolinks-track': 'reload') %>
+
+<% if @article.errors.any? %>
+    <div class="alert alert-danger alert-dismissible">
+        <h2>Cannot save the article</h2>
+        <ul>
+            <% @article.errors.full_messages.each do |err| %>
+                <li><%= err %></li>
+            <% end %>
+        </ul>
+    </div>
+    <%# Suppress bootstrap's error on form %>
+    <% @article.errors.clear %>
+<% end %>
+
+<%= bootstrap_form_with model: @article, local: true do |form| %>
+    <div class="input-group">
+        <%= form.text_field :title, wrapper: false, class: 'no-border input-underline', label_as_placeholder: true %>
+        <div class="input-group-btn">
+            <%= form.submit 'Save' %>
+        </div>
+    </div>
+    <%= form.text_area :body, class: 'no-border auto-resize paste-file-upload', hide_label: true %>
+<% end %>
+
+<input id="file_upload_tag" type="file" class="sr-only" />

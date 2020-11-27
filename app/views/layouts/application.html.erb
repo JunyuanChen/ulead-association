@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            <% if content_for? :title %>
+                <%= yield :title %> -
+            <% end %>
+            ULead Association
+        </title>
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+        <%= favicon_pack_tag 'media/img/ulead_logo.png' %>
+        <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+        <% if content_for? :header %>
+            <%= yield :header %>
+        <% end %>
+    </head>
+
+    <body class="bg-light">
+        <nav class="navbar navbar-dark navbar-expand-md" style="background-color: #CC33FF">
+            <a class="navbar-brand" href="/">
+                <%= image_pack_tag 'media/img/ulead_logo.png', width: 40, height: 40 %>
+                ULead
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-content">
+                <span class="sr-only">Toggle Navbar</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbar-collapse-content" class="collapse navbar-collapse justify-content-between">
+                <ul class="navbar-nav">
+                    <%= nav_link 'Articles', articles_path %>
+                    <%= nav_link 'Users', users_path %>
+                    <%= nav_link 'Tags', tags_path %>
+                    <% if signed_in? %>
+                        <%= nav_link 'New Article', new_article_path %>
+                        <%= nav_link 'New Tag', new_tag_path %>
+                    <% end %>
+                    <% if this_user&.permission? :developer %>
+                        <%= nav_link 'Resources', resources_path %>
+                    <% end %>
+                </ul>
+                <ul class="navbar-nav">
+                    <% if signed_in? %>
+                        <%= nav_link this_user.username, this_user %>
+                        <%= nav_link 'Sign Out', do_sign_out_path, method: :delete %>
+                    <% else %>
+                        <%= nav_link 'Sign Up', new_user_path %>
+                        <%= nav_link 'Sign In', sign_in_path %>
+                    <% end %>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <p>
+                <% flash.each do |type, msg| %>
+                    <div class="alert alert-dismissible alert-<%= css_alert?(type) ? type : 'info' %>">
+                        <%= msg %>
+                    </div>
+                <% end %>
+                <% flash.clear %>
+            </p>
+
+            <%= yield %>
+        </div>
+    </body>
+</html>

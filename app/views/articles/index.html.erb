@@ -1,0 +1,14 @@
+<% @articles.each do |article| %>
+    <%= render 'entry', article: article %>
+<% end %>
+
+<% if @articles.any? %>
+    <%= will_paginate @article %>
+<% else %>
+    <p class="text-secondary font-italic">
+        There is no article... yet!
+        <% if signed_in? %>
+            <%= link_to 'New Article', new_article_path %>
+        <% end %>
+    </p>
+<% end %>

@@ -1,0 +1,69 @@
+class ArticlesController < ApplicationController
+  before_action :ensure_signed_in!, except: %i[index show]
+  before_action :set_article, only: %i[show edit update destroy edit_tags query_tags]
+
+  def dummy
+    render plain: '/i/134'
+  end
+
+  def index
+    @articles = Article.all.order(id: :desc).paginate page: params[:page]
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new article_params.merge(user: this_user)
+    if @article.save
+      flash[:success] = "Created article \"#{@article.title}\"."
+      redirect_to @article
+    else
+      render :new
+    end
+  end
+
+  def show
+    @tags = @article.tags.order(id: :asc)
+  end
+
+  def edit; end
+
+  def update
+    if @article.update article_params
+      flash[:success] = 'Successfully updated the article.'
+      redirect_to @article
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    flash[:dark] = "Deleted article \"#{@article.destroy.title}\"."
+    redirect_to articles_path
+  end
+
+  def edit_tags
+    @tags = @article.tags.order(id: :asc).paginate page: params[:tags_page]
+    @results = Tag.all.paginate page: params[:tags_page]
+  end
+
+  def query_tags
+    @tags = @article.tags.order(id: :asc).paginate page: params[:tags_page]
+    @results = Tag.where('`name` LIKE ?', "%#{params[:query].gsub(/\s+/, '-')}%")
+                  .or(Tag.where('`description` LIKE ?', "%#{params[:query]}%"))
+                  .paginate(page: params[:results_page])
+    render :edit_tags
+  end
+
+  private
+
+  def article_params
+    params.require(:article).permit(:title, :body)
+  end
+
+  def set_article
+    @article = Article.find params[:id]
+  end
+end

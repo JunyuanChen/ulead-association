@@ -1,0 +1,19 @@
+.no-border {
+    border: none;
+    box-shadow: none !important;
+}
+
+.input-underline {
+    border-bottom: 5px solid black;
+    border-radius: 0;
+    transition: border-color 0.5s;
+}
+
+.auto-resize {
+    resize: none;
+    overflow-y: hidden;
+}
+
+.text-transparent {
+    color: transparent;
+}

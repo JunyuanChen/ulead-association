@@ -1,0 +1,33 @@
+<%= content_for :title, @article.title %>
+
+<h1><%= link_to @article.title, @article %></h1>
+
+<% @tags.each do |tag| %>
+    <%= render 'tags/tag', tag: tag %>
+<% end %>
+<% if signed_in? %>
+    <%= link_to 'Edit Tags', edit_tags_path(@article) %>
+<% end %>
+
+<div class="d-flex justify-content-between">
+    <span>
+        <%= @article.created_at.to_date.inspect %> &bull;
+        By <%= link_to @article.user.username, @article.user %>
+        <% if @article.updated_at != @article.created_at %>
+            <br />
+            Last update <%= @article.updated_at.to_date.inspect %>
+        <% end %>
+    </span>
+    <% if signed_in? %>
+        <span>
+            <%= link_to 'Edit', edit_article_path(@article) %> |
+            <%= link_to 'Delete', @article,
+              method: :delete,
+              class: 'text-danger',
+              data: { confirm: 'Are you sure?' } %>
+        </span>
+    <% end %>
+</div>
+<hr />
+
+<%== @article.rendered %>

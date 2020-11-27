@@ -1,0 +1,22 @@
+<% content_for :title, "User #{@user.username}" %>
+
+<h1>
+    User <span class="text-secondary"><%= @user.username %></span>
+    <% if this_user.id == @user.id || this_user.permission?(:admin) %>
+        <%= link_to 'Edit', edit_user_path(@user), class: 'badge badge-warning' %>
+        <%= link_to 'Destroy', @user,
+          method: :delete,
+          class: 'badge badge-danger',
+          data: { confirm: 'Are you sure?' } %>
+    <% end %>
+</h1>
+
+<% @articles.each do |article| %>
+    <%= render 'articles/entry', article: article %>
+<% end %>
+
+<% if @articles.any? %>
+    <%= will_paginate @articles %>
+<% else %>
+    <p class="text-secondary font-italic">This user has not posted any article... yet!</p>
+<% end %>

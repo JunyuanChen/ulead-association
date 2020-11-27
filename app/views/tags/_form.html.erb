@@ -1,0 +1,5 @@
+<%= bootstrap_form_with model: @tag, local: true do |form| %>
+    <%= form.text_field :name, prepend: '#' %>
+    <%= form.text_area :description %>
+    <%= form.submit 'Save' %>
+<% end %>
