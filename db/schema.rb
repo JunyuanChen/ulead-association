@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_28_210612) do
+ActiveRecord::Schema.define(version: 2020_11_28_220325) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_11_28_210612) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_dynamic_routes_on_article_id"
+    t.index ["path"], name: "index_dynamic_routes_on_path"
   end
 
   create_table "tags", force: :cascade do |t|
