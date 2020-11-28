@@ -17,3 +17,8 @@
 .text-transparent {
     color: transparent;
 }
+
+.markdown-content img:not(.style-as-is) {
+    width: auto;
+    max-width: 100%;
+}

@@ -41,15 +41,15 @@ $(document).on('turbolinks:load', () => {
             }
         }
     }).on('keyup', function (event) {
-        if (event.ctrlKey && event.altKey && event.key === "u") {
+        if (event.ctrlKey && event.altKey && event.key === 'u') {
             event.preventDefault()
             var that = this
-            $("#file_upload_tag")[0].onchange = function () {
+            $('#file_upload_tag')[0].onchange = function () {
                 if (this.files[0]) {
                     uploadFile(this.files[0], that)
                 }
             }
-            $("#file_upload_tag").trigger('click')
+            $('#file_upload_tag').trigger('click')
         }
     })
 })
