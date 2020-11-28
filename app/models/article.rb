@@ -4,6 +4,7 @@ class Article < ApplicationRecord
 
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   belongs_to :approver, class_name: 'User', foreign_key: :approver_id, optional: true
+  has_many :dynamic_routes, dependent: :destroy
   has_and_belongs_to_many :tags
 
   before_save :render_markdown

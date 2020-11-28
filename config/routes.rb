@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root to: 'articles#index'
-
   get 'users/sign_in', to: 'users#sign_in', as: :sign_in
   post 'users/sign_in', to: 'users#do_sign_in', as: :do_sign_in
   delete 'users/sign_out', to: 'users#do_sign_out', as: :do_sign_out
@@ -21,4 +19,7 @@ Rails.application.routes.draw do
   get 'resources', to: 'resources#index', as: :resources
   post 'resources/upload', to: 'resources#upload'
   delete 'resources/:digest', to: 'resources#destroy', as: :destroy_resource, constraints: { digest: /[A-Fa-f0-9]{64}/ }
+
+  resources :dynamic_routes, path: 'routes', only: %i[index create destroy]
+  get '(*path)', to: 'dynamic_routes#display', defaults: { path: '' }
 end

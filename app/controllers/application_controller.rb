@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
     flash[:danger] = 'You do not have sufficient permission to access this page.'
     redirect_back fallback_location: '/'
   end
+
+  def not_found
+    raise ActionController::RoutingError, 'Not Found'
+  end
 end

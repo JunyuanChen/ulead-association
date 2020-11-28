@@ -1,0 +1,43 @@
+<% content_for :title, 'Dynamic Routes' %>
+
+<h1><%= yield :title %></h1>
+
+<%= bootstrap_form_with url: dynamic_routes_path, layout: :inline, local: true do |form| %>
+    <%= form.text_field :path, prepend: '/', hide_label: true %>
+    &rarr;
+    <%= form.text_field :article_id, hide_label: true %>
+    <%= form.primary 'Create' %>
+<% end %>
+<hr />
+
+<% if @routes.any? %>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Path</th>
+                <th scope="col">Article</th>
+                <th scope="col">Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @routes.each do |route| %>
+                <tr>
+                    <td>/<%= route.path %></td>
+                    <td><%= route.article.id %></td>
+                    <td><%= route.article.title.truncate(64) %></td>
+                    <td>
+                        <%= link_to 'Delete', route,
+                              method: :delete,
+                              class: 'text-danger',
+                              data: { confirm: 'Are you sure?' } %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= will_paginate @routes %>
+<% else %>
+    <p class="text-secondary font-italic">There is no dynamic route... yet!</p>
+<% end %>
