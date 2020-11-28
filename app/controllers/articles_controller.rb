@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
   def show
     no_permission unless this_user&.can_view? @article
 
-    @tags = @article.tags.order(id: :asc)
+    @tags = @article.tags.ordered
   end
 
   def edit; end
@@ -45,12 +45,12 @@ class ArticlesController < ApplicationController
   end
 
   def edit_tags
-    @tags = @article.tags.order(id: :asc).paginate page: params[:tags_page]
+    @tags = @article.tags.ordered.paginate page: params[:tags_page]
     @results = Tag.all.paginate page: params[:tags_page]
   end
 
   def query_tags
-    @tags = @article.tags.order(id: :asc).paginate page: params[:tags_page]
+    @tags = @article.tags.ordered.paginate page: params[:tags_page]
     @results = Tag.where('`name` LIKE ?', "%#{params[:query].gsub(/\s+/, '-')}%")
                   .or(Tag.where('`description` LIKE ?', "%#{params[:query]}%"))
                   .paginate(page: params[:results_page])

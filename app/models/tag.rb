@@ -5,6 +5,8 @@ class Tag < ApplicationRecord
 
   before_save :substitute_whitespace
 
+  scope :ordered, -> { order(id: :asc) }
+
   private
 
   def substitute_whitespace

@@ -5,7 +5,7 @@
         <%== article.summary %>
     </div>
 
-    <% article.tags.order(id: :asc).each do |tag| %>
+    <% article.tags.ordered.each do |tag| %>
         <%= render 'tags/tag', tag: tag %>
     <% end %>
     <% if this_user&.can_edit? article %>
