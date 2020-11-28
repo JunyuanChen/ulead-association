@@ -9,18 +9,31 @@ class Article < ApplicationRecord
   before_save :render_markdown
 
   scope :ordered, -> { order(id: :desc) }
+  scope :listed, -> { where(hidden: false) }
+  scope :approved, -> { where.not(approver: nil) }
+  scope :authored_by, ->(user) { where(author: user) }
   scope :viewable_by, (lambda do |user|
-    if user&.permission? :reviewer
+    if user&.permission? :developer
       all
-    elsif user.present?
-      where.not(approver: nil).or(where(author: user))
+    elsif user&.permission? :reviewer
+      listed.or(authored_by(user))
     else
-      where.not(approver: nil)
+      listed.approved.or(authored_by(user))
     end
   end)
 
   def approved?
     approver.present?
+  end
+
+  def bg_color
+    if hidden?
+      'bg-hidden'
+    elsif !approved?
+      'bg-pending'
+    else
+      ''
+    end
   end
 
   private

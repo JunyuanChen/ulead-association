@@ -22,10 +22,24 @@ class User < ApplicationRecord
   end
 
   def can_view?(article)
-    article.approved? || permission?(:reviewer) || article.author == self
+    return true if article.author == self
+
+    if article.hidden?
+      permission? :developer
+    elsif !article.approved?
+      permission? :reviewer
+    else
+      true
+    end
   end
 
   def can_edit?(article)
-    permission?(:reviewer) || article.author == self && !article.approved?
+    if article.hidden?
+      permission? :developer
+    elsif article.approved?
+      permission? :reviewer
+    else
+      article.author == self || permission?(:reviewer)
+    end
   end
 end

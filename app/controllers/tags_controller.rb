@@ -1,6 +1,8 @@
 class TagsController < ApplicationController
   before_action :ensure_signed_in!, except: %i[index show]
   before_action :set_tag, except: %i[index new create]
+  before_action :set_article, only: %i[add_article remove_article]
+  before_action :ensure_edit_permission!, only: %i[add_article remove_article]
 
   def index
     @tags = Tag.all.paginate page: params[:page]
@@ -52,9 +54,6 @@ class TagsController < ApplicationController
   end
 
   def add_article
-    @article = Article.find params[:article_id]
-    no_permission unless this_user.can_edit? @article
-
     if @tag.articles.include? @article
       flash[:warning] = "The article already has tag ##{@tag.name}."
     else
@@ -65,9 +64,6 @@ class TagsController < ApplicationController
   end
 
   def remove_article
-    @article = Article.find params[:article_id]
-    no_permission unless this_user.can_edit? @article
-
     if @tag.articles.include? @article
       @tag.articles.delete @article
       flash[:secondary] = "Removed tag ##{@tag.name} from article \"#{@article.title}\"."
@@ -85,5 +81,15 @@ class TagsController < ApplicationController
 
   def set_tag
     @tag = Tag.find params[:id]
+  end
+
+  def set_article
+    @article = Article.find params[:article_id]
+  end
+
+  def ensure_edit_permission!
+    return if this_user.can_edit? @article
+
+    no_permission
   end
 end

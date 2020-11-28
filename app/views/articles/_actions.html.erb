@@ -1,0 +1,23 @@
+<span>
+    <% if this_user.permission? :developer %>
+        <% if article.hidden? %>
+            <%= link_to 'List',hide_article_path(article, hidden: false),
+             method: :patch,
+             class: 'text-warning' %>
+        <% else %>
+            <%= link_to 'Hide', hide_article_path(article, hidden: true),
+             method: :patch,
+             class: 'text-muted' %>
+        <% end %> |
+    <% end %>
+    <% if !article.approved? && this_user.permission?(:reviewer) %>
+        <%= link_to 'Approve', approve_article_path(article),
+         method: :patch,
+         class: 'text-success' %> |
+    <% end %>
+    <%= link_to 'Edit', edit_article_path(article) %> |
+    <%= link_to 'Delete', article,
+       method: :delete,
+       class: 'text-danger',
+       data: { confirm: 'Are you sure?' } %>
+</span>

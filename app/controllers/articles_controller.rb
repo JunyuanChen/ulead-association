@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :ensure_signed_in!, except: %i[index show]
   before_action :ensure_reviewer!, only: :approve
+  before_action :ensure_developer!, only: :hide
   before_action :set_article, except: %i[index new create]
   before_action :ensure_edit_permission!, except: %i[index show new create]
 
@@ -62,6 +63,15 @@ class ArticlesController < ApplicationController
       flash[:success] = "Approved article #{@article.title}."
     else
       flash[:danger] = "Failed to approve the article: #{@article.errors.full_messages.first}."
+    end
+    redirect_back fallback_location: @article
+  end
+
+  def hide
+    if @article.update hidden: params[:hidden]
+      flash[:success] = "Article #{@article.title} will be #{@article.hidden? ? 'hidden' : 'listed'} in the index."
+    else
+      flash[:danger] = "Cannot hide the article: #{@article.errors.full_messages.first}."
     end
     redirect_back fallback_location: @article
   end

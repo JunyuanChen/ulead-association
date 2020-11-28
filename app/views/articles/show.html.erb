@@ -1,6 +1,6 @@
 <%= content_for :title, @article.title %>
 
-<h1 class="<%= @article.approved? ? '' : 'bg-warning' %>">
+<h1 class="<%= @article.bg_color %>">
     <%= link_to @article.title, @article %>
 </h1>
 
@@ -21,18 +21,7 @@
         <% end %>
     </span>
     <% if this_user&.can_edit? @article %>
-        <span>
-            <% if !@article.approved? && this_user.permission?(:reviewer) %>
-                <%= link_to 'Approve', approve_article_path(@article),
-                 method: :patch,
-                 class: 'text-success' %> |
-            <% end %>
-            <%= link_to 'Edit', edit_article_path(@article) %> |
-            <%= link_to 'Delete', @article,
-              method: :delete,
-              class: 'text-danger',
-              data: { confirm: 'Are you sure?' } %>
-        </span>
+        <%= render 'actions', article: @article %>
     <% end %>
 </div>
 <hr />

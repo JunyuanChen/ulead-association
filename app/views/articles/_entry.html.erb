@@ -1,4 +1,4 @@
-<div class="alert <%= article.approved? ? '' : 'bg-warning' %>">
+<div class="alert <%= article.bg_color %>">
     <h2><%= link_to article.title, article %></h2>
 
     <div class="text-muted">
@@ -22,18 +22,7 @@
             <% end %>
         </span>
         <% if this_user&.can_edit? article %>
-            <span>
-                <% if !article.approved? && this_user.permission?(:reviewer) %>
-                    <%= link_to 'Approve', approve_article_path(article),
-                     method: :patch,
-                     class: 'text-success' %> |
-                <% end %>
-                <%= link_to 'Edit', edit_article_path(article) %> |
-                <%= link_to 'Delete', article,
-                   method: :delete,
-                   class: 'text-danger',
-                   data: { confirm: 'Are you sure?' } %>
-            </span>
+            <%= render 'articles/actions', article: article %>
         <% end %>
     </div>
 </div>

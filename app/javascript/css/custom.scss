@@ -18,6 +18,14 @@
     color: transparent;
 }
 
+.bg-pending {
+    background-color: #FFDD99 !important;
+}
+
+.bg-hidden {
+    background-color: #FFCCEE !important;
+}
+
 .markdown-content img:not(.style-as-is) {
     width: auto;
     max-width: 100%;

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'articles/:id/edit_tags', to: 'articles#edit_tags', as: :edit_tags
   post 'articles/:id/edit_tags', to: 'articles#query_tags', as: :query_tags
   patch 'articles/:id/approve', to: 'articles#approve', as: :approve_article
+  patch 'articles/:id/hide', to: 'articles#hide', as: :hide_article
   resources :articles
 
   patch 'tags/:id/add_article', to: 'tags#add_article', as: :add_tag
