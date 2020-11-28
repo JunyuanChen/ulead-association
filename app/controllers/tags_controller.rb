@@ -22,7 +22,7 @@ class TagsController < ApplicationController
   end
 
   def show
-    @articles = @tag.articles.order(id: :desc).paginate page: params[:page]
+    @article = @tag.articles.ordered.viewable_by(this_user).paginate page: params[:page]
   end
 
   def edit; end

@@ -5,11 +5,11 @@ one:
   body: MyText
   rendered: MyText
   summary: MyText
-  user: one
+  author: one
 
 two:
   title: MyString
   body: MyText
   rendered: MyText
   summary: MyText
-  user: two
+  author: two

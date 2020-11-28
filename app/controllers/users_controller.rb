@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @articles = @user.articles.order(id: :desc).paginate page: params[:page]
+    @articles = @user.articles.ordered.viewable_by(this_user).paginate page: params[:page]
   end
 
   def edit; end
@@ -46,13 +46,13 @@ class UsersController < ApplicationController
   end
 
   def update_permission
-    if this_user.permission? params[:permission]
+    if @user.permission?(this_user.permission) || !this_user.permission?(params[:permission])
+      flash[:danger] = 'You do not have sufficient permission yourself.'
+      render :edit
+    else
       @user.update_permission!(params[:permission])
       flash[:success] = "Updated permission for #{@user.username} to #{@user.permission}."
       redirect_to @user
-    else
-      flash[:danger] = 'You do not have sufficient permission yourself.'
-      render :edit
     end
   rescue ActiveRecord::StatementInvalid => e
     flash[:danger] = "Failed to update permission for #{@user.username}.\nGot #{e}."
@@ -111,7 +111,7 @@ class UsersController < ApplicationController
   end
 
   def ensure_admin_or_owner!
-    return if this_user.id == @user.id || this_user.permission?(:admin)
+    return if this_user == @user || this_user.permission?(:admin)
 
     no_permission
   end

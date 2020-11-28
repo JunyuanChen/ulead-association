@@ -2,7 +2,7 @@
 
 <h1>
     User <span class="text-secondary"><%= @user.username %></span>
-    <% if this_user.id == @user.id || this_user.permission?(:admin) %>
+    <% if this_user == @user || this_user&.permission?(:admin) %>
         <%= link_to 'Edit', edit_user_path(@user), class: 'badge badge-warning' %>
         <%= link_to 'Destroy', @user,
           method: :delete,

@@ -2,10 +2,26 @@ class Article < ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true, length: { minimum: 15 }
 
-  belongs_to :user
+  belongs_to :author, class_name: 'User', foreign_key: :user_id
+  belongs_to :approver, class_name: 'User', foreign_key: :approver_id, optional: true
   has_and_belongs_to_many :tags
 
   before_save :render_markdown
+
+  scope :ordered, -> { order(id: :desc) }
+  scope :viewable_by, (lambda do |user|
+    if user&.permission? :reviewer
+      all
+    elsif user.present?
+      where.not(approver: nil).or(where(author: user))
+    else
+      where.not(approver: nil)
+    end
+  end)
+
+  def approved?
+    approver.present?
+  end
 
   private
 

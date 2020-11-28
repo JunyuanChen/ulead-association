@@ -1,25 +1,32 @@
 <%= content_for :title, @article.title %>
 
-<h1><%= link_to @article.title, @article %></h1>
+<h1 class="<%= @article.approved? ? '' : 'bg-warning' %>">
+    <%= link_to @article.title, @article %>
+</h1>
 
 <% @tags.each do |tag| %>
     <%= render 'tags/tag', tag: tag %>
 <% end %>
-<% if signed_in? %>
+<% if this_user&.can_edit? @article %>
     <%= link_to 'Edit Tags', edit_tags_path(@article) %>
 <% end %>
 
 <div class="d-flex justify-content-between">
     <span>
         <%= @article.created_at.to_date.inspect %> &bull;
-        By <%= link_to @article.user.username, @article.user %>
+        By <%= link_to @article.author.username, @article.author %>
         <% if @article.updated_at != @article.created_at %>
             <br />
             Last update <%= @article.updated_at.to_date.inspect %>
         <% end %>
     </span>
-    <% if signed_in? %>
+    <% if this_user&.can_edit? @article %>
         <span>
+            <% if !@article.approved? && this_user.permission?(:reviewer) %>
+                <%= link_to 'Approve', approve_article_path(@article),
+                 method: :patch,
+                 class: 'text-success' %> |
+            <% end %>
             <%= link_to 'Edit', edit_article_path(@article) %> |
             <%= link_to 'Delete', @article,
               method: :delete,

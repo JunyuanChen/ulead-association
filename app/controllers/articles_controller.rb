@@ -1,13 +1,11 @@
 class ArticlesController < ApplicationController
   before_action :ensure_signed_in!, except: %i[index show]
-  before_action :set_article, only: %i[show edit update destroy edit_tags query_tags]
-
-  def dummy
-    render plain: '/i/134'
-  end
+  before_action :ensure_reviewer!, only: :approve
+  before_action :ensure_edit_permission!, except: %i[index show new create]
+  before_action :set_article, except: %i[index new create]
 
   def index
-    @articles = Article.all.order(id: :desc).paginate page: params[:page]
+    @articles = Article.ordered.viewable_by(this_user).paginate page: params[:page]
   end
 
   def new
@@ -15,7 +13,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new article_params.merge(user: this_user)
+    @article = Article.new article_params.merge(author: this_user)
     if @article.save
       flash[:success] = "Created article \"#{@article.title}\"."
       redirect_to @article
@@ -25,6 +23,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    no_permission unless this_user&.can_view? @article
+
     @tags = @article.tags.order(id: :asc)
   end
 
@@ -57,6 +57,15 @@ class ArticlesController < ApplicationController
     render :edit_tags
   end
 
+  def approve
+    if @article.update approver: this_user
+      flash[:success] = "Approved article #{@article.title}."
+    else
+      flash[:danger] = "Failed to approve the article: #{@article.errors.full_messages.first}."
+    end
+    redirect_back fallback_location: @article
+  end
+
   private
 
   def article_params
@@ -65,5 +74,11 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article = Article.find params[:id]
+  end
+
+  def ensure_edit_permission!
+    return if this_user.can_edit? @article
+
+    no_permission
   end
 end

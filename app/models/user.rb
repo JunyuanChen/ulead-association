@@ -20,4 +20,12 @@ class User < ApplicationRecord
     required = User.permissions[required] unless required.is_a?(Integer)
     User.permissions[permission] >= required
   end
+
+  def can_view?(article)
+    article.approved? || permission?(:reviewer) || article.author == self
+  end
+
+  def can_edit?(article)
+    permission?(:reviewer) || article.author == self && !article.approved?
+  end
 end
