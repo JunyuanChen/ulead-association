@@ -1,8 +1,8 @@
 class ArticlesController < ApplicationController
   before_action :ensure_signed_in!, except: %i[index show]
   before_action :ensure_reviewer!, only: :approve
-  before_action :ensure_edit_permission!, except: %i[index show new create]
   before_action :set_article, except: %i[index new create]
+  before_action :ensure_edit_permission!, except: %i[index show new create]
 
   def index
     @articles = Article.ordered.viewable_by(this_user).paginate page: params[:page]

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update_password update_permission destroy]
   before_action :ensure_signed_in!, except: %i[index new create show sign_in do_sign_in do_sign_out]
-  before_action :ensure_admin_or_owner!, only: %i[edit update_password]
   before_action :ensure_admin!, only: %i[update_permission destroy]
+  before_action :set_user, except: %i[index new create sign_in do_sign_in do_sign_out]
+  before_action :ensure_admin_or_owner!, only: %i[edit update_password]
 
   def index
     @users = User.all.paginate page: params[:page]

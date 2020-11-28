@@ -5,7 +5,7 @@
 <%= bootstrap_form_with url: query_tags_path, layout: :inline, local: true do |form| %>
     <%= form.text_field :query, hide_label: true %>
     <%= form.submit 'Search' %>
-    <%= form.button 'Create', class: 'btn btn-success', type: :button, onclick: 'createTag()' %>
+    <%= form.button 'Create', class: 'btn btn-success edit-article-tags', formaction: tags_path %>
 <% end %>
 <br />
 
