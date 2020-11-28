@@ -1,5 +1,4 @@
 function resizeTextarea(area) {
-    area.style.height = 0
     area.style.height = area.scrollHeight + 'px'
 }
 
