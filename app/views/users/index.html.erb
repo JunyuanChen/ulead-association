@@ -18,7 +18,7 @@
                 <tr>
                     <th scope="row"><%= user.id %></th>
                     <td><%= link_to user.username, user %></td>
-                    <td><%= user.articles.count %></td>
+                    <td><%= user.articles.viewable_by(this_user).count %></td>
                     <% if this_user&.permission? :admin %>
                         <td>
                             <% if user.unapproved? %>
