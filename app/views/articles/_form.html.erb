@@ -13,6 +13,7 @@
     <% @article.errors.clear %>
 <% end %>
 
+<p class="text-muted font-italic">You can use Markdown and HTML to layout your article. (<a href="/layout_article">?</a>)</p>
 <%= bootstrap_form_with model: @article, local: true do |form| %>
     <div class="input-group">
         <%= form.text_field :title, wrapper: false, class: 'no-border input-underline', label_as_placeholder: true %>
