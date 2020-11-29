@@ -25,7 +25,7 @@ class User < ApplicationRecord
     return true if article.author == self
 
     if article.hidden?
-      permission? :developer
+      permission? :admin
     elsif !article.approved?
       permission? :reviewer
     else
@@ -35,7 +35,7 @@ class User < ApplicationRecord
 
   def can_edit?(article)
     if article.hidden?
-      permission? :developer
+      permission? :admin
     elsif article.approved?
       permission? :reviewer
     else

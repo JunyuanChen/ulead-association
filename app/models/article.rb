@@ -14,7 +14,7 @@ class Article < ApplicationRecord
   scope :approved, -> { where.not(approver: nil) }
   scope :authored_by, ->(user) { where(author: user) }
   scope :viewable_by, (lambda do |user|
-    if user&.permission? :developer
+    if user&.permission? :admin
       all
     elsif user&.permission? :reviewer
       listed.or(authored_by(user))
