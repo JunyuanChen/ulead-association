@@ -7,11 +7,13 @@ class User < ApplicationRecord
   enum permission: %i[unapproved member reviewer admin developer]
 
   def update_permission!(permission)
+    raise TypeError, "`#{permission}' is not a valid permission." unless permission.is_a?(Symbol) || permission.is_a?(String)
+
     # This is necessary because `has_secure_password' made it impossible to use #update.
-    permission = User.permissions[permission] unless permission.is_a?(Integer)
-    ActiveRecord::Base.connection.exec_update('UPDATE `users` SET `permission` = ? WHERE `id` = ?',
+    ActiveRecord::Base.connection.exec_update('UPDATE `users` SET `permission` = ?, `updated_at` = ? WHERE `id` = ?',
                                               'Permission Update',
-                                              [[nil, permission],
+                                              [[nil, User.permissions[permission]],
+                                               [nil, Time.now],
                                                [nil, id]])
     reload
   end
