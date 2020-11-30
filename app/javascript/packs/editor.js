@@ -1,3 +1,5 @@
+import Compressor from 'compressorjs'
+
 function resizeTextarea(area) {
     area.style.height = area.scrollHeight + 'px'
 }
@@ -26,6 +28,21 @@ function uploadFile(file, textarea) {
     })
 }
 
+function downSizeFile(file, callback) {
+    if (file.type.startsWith('image/')) {
+        new Compressor(file, {
+            quality: 0.6,
+            maxWidth: 2048,
+            success: callback,
+            error: () => {
+                callback(file)
+            }
+        })
+    } else {
+        callback(file)
+    }
+}
+
 $(document).on('turbolinks:load', () => {
     $('.auto-resize').each(function () {
         resizeTextarea(this)
@@ -37,7 +54,9 @@ $(document).on('turbolinks:load', () => {
         var clipboard = (event.clipboardData || event.originalEvent.clipboardData).items;
         for (let item of clipboard) {
             if (item.kind === 'file') {
-                uploadFile(item.getAsFile(), this)
+                downSizeFile(item.getAsFile(), (file) => {
+                    uploadFile(file, this)
+                })
             }
         }
     }).on('keyup', function (event) {
@@ -46,7 +65,9 @@ $(document).on('turbolinks:load', () => {
             var that = this
             $('#file_upload_tag')[0].onchange = function () {
                 if (this.files[0]) {
-                    uploadFile(this.files[0], that)
+                    downSizeFile(this.files[0], (file) => {
+                        uploadFile(file, that)
+                    })
                 }
             }
             $('#file_upload_tag').trigger('click')
