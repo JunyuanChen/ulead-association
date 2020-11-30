@@ -3,13 +3,13 @@ class Tag < ApplicationRecord
 
   has_and_belongs_to_many :articles
 
-  before_save :substitute_whitespace
+  before_validation :substitute_whitespace
 
   scope :ordered, -> { order(id: :asc) }
 
   private
 
   def substitute_whitespace
-    name.gsub!(/\s+/, '-')
+    name&.gsub!(/\s+/, '-')
   end
 end
