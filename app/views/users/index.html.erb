@@ -9,6 +9,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Articles</th>
                 <% if this_user&.permission? :admin %>
+                    <th scope="col">Permission</th>
                     <th></th>
                 <% end %>
             </tr>
@@ -20,6 +21,7 @@
                     <td><%= link_to user.username, user %></td>
                     <td><%= user.articles.viewable_by(this_user).count %></td>
                     <% if this_user&.permission? :admin %>
+                        <td><span class="badge badge-info"><%= user.permission %></td>
                         <td>
                             <% if user.unapproved? %>
                                 <%= link_to 'Approve', update_permission_path(user, permission: :member),
