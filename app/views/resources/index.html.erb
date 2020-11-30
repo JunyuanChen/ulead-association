@@ -6,15 +6,19 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Digest</th>
+                <th scope="col">Size</th>
+                <th scope="col">Bytes</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            <% @resources.each do |resource| %>
+            <% @resources.each do |digest, size| %>
                 <tr>
-                    <th scope="row"><%= resource %></th>
+                    <th scope="row"><%= digest %></th>
+                    <th scope="row"><%= number_to_human_size size %></th>
+                    <th scope="row"><%= size %></th>
                     <td>
-                        <%= link_to 'Delete', destroy_resource_path(resource),
+                        <%= link_to 'Delete', destroy_resource_path(digest),
                          method: :delete,
                          class: 'text-danger',
                          data: { confirm: 'Are you sure?' } %>

@@ -3,7 +3,10 @@ class ResourcesController < ApplicationController
   before_action :ensure_developer!, except: :upload
 
   def index
-    @resources = Dir.entries(Rails.root.join('public', 'rc')).select { |r| /[A-Fa-f0-9]{64}/ =~ r }
+    @resources = Dir.entries(Rails.root.join('public', 'rc'))
+                    .select { |r| /[A-Fa-f0-9]{64}/ =~ r }
+                    .map { |r| [r, File.size(Rails.root.join('public', 'rc', r))] }
+                    .sort_by { |_digest, size| -size }
   end
 
   def upload
