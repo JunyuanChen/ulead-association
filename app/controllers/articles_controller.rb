@@ -24,7 +24,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    no_permission unless this_user&.can_view? @article
+    no_permission unless this_user!.can_view? @article
 
     @tags = @article.tags.ordered
   end

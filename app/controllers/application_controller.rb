@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
     User.where(id: session[:user_id]).first
   end
 
+  def this_user!
+    this_user || User.new(permission: :unapproved)
+  end
+
   def signed_in?
     this_user.present?
   end
