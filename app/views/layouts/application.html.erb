@@ -32,8 +32,8 @@
             <div id="navbar-collapse-content" class="collapse navbar-collapse justify-content-between">
                 <ul class="navbar-nav">
                     <%= nav_link 'Articles', articles_path %>
-                    <%= nav_link 'Users', users_path %>
                     <%= nav_link 'Tags', tags_path %>
+                    <%= nav_link 'Users', users_path %>
                     <% if signed_in? %>
                         <%= nav_link 'New Article', new_article_path %>
                         <%= nav_link 'New Tag', new_tag_path %>
@@ -54,6 +54,7 @@
                 </ul>
             </div>
         </nav>
+
         <div class="container">
             <p>
                 <% flash.each do |type, msg| %>
