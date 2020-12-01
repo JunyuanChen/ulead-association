@@ -2,6 +2,7 @@ class ResourcesController < ApplicationController
   before_action :ensure_signed_in!
   before_action :ensure_developer!, except: :upload
 
+  # GET /resources
   def index
     @resources = Dir.entries(Rails.root.join('public', 'rc'))
                     .select { |r| /[A-Fa-f0-9]{64}/ =~ r }
@@ -9,6 +10,7 @@ class ResourcesController < ApplicationController
                     .sort_by { |_digest, size| -size }
   end
 
+  # POST /resources/upload
   def upload
     filepath = Rails.root.join('storage', SecureRandom.uuid.to_s)
     File.open(filepath, 'wb') do |f|
@@ -26,6 +28,7 @@ class ResourcesController < ApplicationController
     render plain: "/rc/#{digest}"
   end
 
+  # DELETE /resources/:digest
   def destroy
     path = Rails.root.join 'public', 'rc', params[:digest]
     if File.file? path

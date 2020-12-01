@@ -4,14 +4,17 @@ class UsersController < ApplicationController
   before_action :set_user, except: %i[index new create sign_in do_sign_in do_sign_out]
   before_action :ensure_admin_or_owner!, only: %i[edit update_password]
 
+  # GET /users
   def index
     @users = User.all.paginate page: params[:page]
   end
 
+  # GET /users/new
   def new
     @user = User.new
   end
 
+  # POST /users
   def create
     @user = User.new user_params
     if @user.save
@@ -23,12 +26,15 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/:id
   def show
     @articles = @user.articles.ordered.viewable_by(this_user).paginate page: params[:page]
   end
 
+  # GET /users/:id/edit
   def edit; end
 
+  # PATCH /users/:id/update_password
   def update_password
     if @user.authenticate(params[:old_password]) || this_user.permission?(:admin)
       if @user.update password: params[:password],
@@ -45,6 +51,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # PATCH /users/:id/update_permission
   def update_permission
     if @user.permission?(this_user.permission) || !this_user.permission?(params[:permission])
       flash[:danger] = 'You do not have sufficient permission yourself.'
@@ -59,6 +66,7 @@ class UsersController < ApplicationController
     render :edit
   end
 
+  # DELETE /users/:id
   def destroy
     if @user.permission? this_user.permission
       flash[:danger] = "You do not have sufficient permission to destroy user #{@user.username}"
@@ -69,10 +77,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/sign_in
   def sign_in
     redirect_to '/' if signed_in?
   end
 
+  # POST /users/sign_in
   def do_sign_in
     @user = User.where(username: params[:username]).first
     if !@user&.authenticate(params[:password])
@@ -89,6 +99,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # DELETE /users/sign_out
   def do_sign_out
     if signed_in?
       reset_session
@@ -110,6 +121,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
   end
 
+  # Call `no_permission' unless this user is an admin or is the user
   def ensure_admin_or_owner!
     return if this_user == @user || this_user.permission?(:admin)
 

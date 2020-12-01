@@ -4,14 +4,17 @@ class TagsController < ApplicationController
   before_action :set_article, only: %i[add_article remove_article]
   before_action :ensure_edit_permission!, only: %i[add_article remove_article]
 
+  # GET /tags
   def index
     @tags = Tag.all.paginate page: params[:page]
   end
 
+  # GET /tags/new
   def new
     @tag = Tag.new
   end
 
+  # POST /tags
   def create
     @tag = if params[:query].present?
              Tag.new name: params[:query]
@@ -32,12 +35,15 @@ class TagsController < ApplicationController
     end
   end
 
+  # GET /tags/:id
   def show
     @articles = @tag.articles.ordered.viewable_by(this_user).paginate page: params[:page]
   end
 
+  # GET /tags/:id/edit
   def edit; end
 
+  # PATCH /tags/:id
   def update
     if @tag.update tag_params
       flash[:success] = 'Updated the tag.'
@@ -48,11 +54,13 @@ class TagsController < ApplicationController
     end
   end
 
+  # DELETE /tags/:id
   def destroy
     flash[:secondary] = "Deleted tag ##{@tag.destroy.name}."
     redirect_to tags_path
   end
 
+  # PATCH /tags/:id/add_article
   def add_article
     if @tag.articles.include? @article
       flash[:warning] = "The article already has tag ##{@tag.name}."
@@ -63,6 +71,7 @@ class TagsController < ApplicationController
     redirect_back fallback_location: edit_tags_path(@article)
   end
 
+  # PATCH /tags/:id/remove_article
   def remove_article
     if @tag.articles.include? @article
       @tag.articles.delete @article
