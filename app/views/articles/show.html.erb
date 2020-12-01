@@ -15,6 +15,10 @@
     <span>
         <%= @article.created_at.to_date.inspect %> &bull;
         By <%= link_to @article.author.username, @article.author %>
+        <% if @article.approved? && this_user&.permission?(:reviewer) %>
+            &bull; Approved by
+            <%= link_to @article.approver.username, @article.approver %>
+        <% end %>
         <% if @article.updated_at != @article.created_at %>
             <br />
             Last update <%= @article.updated_at.to_date.inspect %>
