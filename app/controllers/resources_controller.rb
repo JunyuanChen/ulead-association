@@ -1,6 +1,7 @@
 class ResourcesController < ApplicationController
   before_action :ensure_signed_in!
   before_action :ensure_developer!, except: :upload
+  before_action :validate_digest!, only: :delete
 
   # GET /resources
   def index
@@ -38,5 +39,13 @@ class ResourcesController < ApplicationController
       flash[:warning] = "No such resource #{params[:digest]}."
     end
     redirect_to resources_path
+  end
+
+  private
+
+  def validate_digest!
+    return if /[A-Fa-f0-9]{64}/ =~ params[:digest]
+
+    flash[:danger] = "`#{params[:digest]}' is not a valid resource digest."
   end
 end
