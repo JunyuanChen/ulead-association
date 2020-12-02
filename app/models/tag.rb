@@ -10,6 +10,7 @@ class Tag < ApplicationRecord
   private
 
   def substitute_whitespace
+    name&.downcase!
     name&.gsub!(/\s+/, '-')
   end
 end
