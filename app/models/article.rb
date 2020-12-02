@@ -10,16 +10,13 @@ class Article < ApplicationRecord
   before_save :render_markdown
 
   scope :ordered, -> { order(id: :desc) }
-  scope :listed, -> { where(hidden: false) }
-  scope :approved, -> { where.not(approver: nil) }
-  scope :authored_by, ->(user) { where(author: user) }
   scope :viewable_by, (lambda do |user|
     if user&.permission? :admin
       all
     elsif user&.permission? :reviewer
-      listed.or(authored_by(user))
+      where(hidden: false).or(where(author: user))
     else
-      listed.approved.or(authored_by(user))
+      where(hidden: false).where.not(approver: nil).or(where(author: user))
     end
   end)
 
