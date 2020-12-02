@@ -1,0 +1,17 @@
+.markdown-content img:not(.style-as-is) {
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.markdown-content table:not(.style-as-is) {
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-hover;
+}
+
+.markdown-content table thead:not(.style-as-is) {
+    @extend .thead-dark;
+}

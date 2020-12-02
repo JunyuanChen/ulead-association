@@ -1,18 +1,3 @@
-.no-border {
-    border: none;
-    box-shadow: none !important;
-}
-
-.input-underline {
-    border-bottom: 5px solid black;
-    border-radius: 0;
-}
-
-.auto-resize {
-    resize: none;
-    overflow-y: hidden;
-}
-
 .text-transparent {
     color: transparent;
 }
@@ -23,14 +8,6 @@
 
 .bg-hidden {
     background-color: #FFCCEE !important;
-}
-
-.markdown-content img:not(.style-as-is) {
-    width: auto;
-    max-width: 100%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .article-title {

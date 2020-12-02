@@ -1,0 +1,16 @@
+.no-border {
+    border: none;
+    box-shadow: none !important;
+}
+
+.input-underline {
+    border-bottom: 5px solid black;
+    border-radius: 0;
+}
+
+.auto-resize {
+    resize: none;
+    overflow-y: hidden;
+}
+
+

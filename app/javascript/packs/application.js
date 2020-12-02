@@ -26,8 +26,5 @@ $(document).on('turbolinks:load', function () {
         this.remove();
     })
 
-    // Style markdown content with reasonable defaults
-    $('.markdown-content table:not(.style-as-is)').addClass('table table-striped table-hover')
-    $('.markdown-content table:not(.style-as-is) thead:not(.style-as-is)').addClass('thead-dark')
-    $('.markdown-content table:not(.style-as-is) thead:not(.style-as-is) tr:not(.style-as-is) th:not(.style-as-is)').attr('scope', 'col')
+    $('.markdown-content table thead tr th:not(.style-as-is)').attr('scope', 'col')
 })
