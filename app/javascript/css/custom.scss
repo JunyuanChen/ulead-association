@@ -6,7 +6,6 @@
 .input-underline {
     border-bottom: 5px solid black;
     border-radius: 0;
-    transition: border-color 0.5s;
 }
 
 .auto-resize {
@@ -32,4 +31,8 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.article-title {
+    color: #003377;
 }
