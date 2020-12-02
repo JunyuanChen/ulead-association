@@ -20,6 +20,7 @@ class Article < ApplicationRecord
     end
   end)
 
+  # Configure will_paginate default
   self.per_page = 10
 
   def approved?
