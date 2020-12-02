@@ -59,15 +59,17 @@
         </nav>
 
         <div class="container">
-            <p>
-                <% flash.each do |type, msg| %>
+            <% flash.each do |type, msg| %>
+                <p>
                     <div class="alert alert-dismissible alert-<%= css_alert?(type) ? type : 'info' %>">
                         <%= msg %>
                     </div>
-                <% end %>
-                <% flash.clear %>
-            </p>
+                </p>
+            <% end %>
+        </div>
+        <% flash.clear %>
 
+        <div class="container main-content">
             <%= yield %>
         </div>
     </body>
