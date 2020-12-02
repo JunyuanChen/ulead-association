@@ -25,7 +25,7 @@
                 <tr>
                     <td>/<%= route.path %></td>
                     <td><%= route.article.id %></td>
-                    <td><%= route.article.title.truncate(64) %></td>
+                    <td><%= link_to route.article.title.truncate(64), route.article %></td>
                     <td>
                         <%= link_to 'Delete', route,
                               method: :delete,
