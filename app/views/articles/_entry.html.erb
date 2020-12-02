@@ -14,11 +14,13 @@
 
     <div class="d-flex justify-content-between">
         <span>
-            <%= article.created_at.to_date.inspect %> &bull;
-            By <%= link_to article.author.username, article.author %>
-            <% if article.approved? && this_user&.permission?(:reviewer) %>
-                &bull; Approved by
-                <%= link_to article.approver.username, article.approver %>
+            <%= article.created_at.to_date.inspect %>
+            <% if this_user&.permission? :reviewer %>
+                &bull; By <%= link_to article.author.username, article.author %>
+                <% if article.approved? %>
+                    &bull; Approved by
+                    <%= link_to article.approver.username, article.approver %>
+                <% end %>
             <% end %>
             <% if article.updated_at != article.created_at %>
                 <br />

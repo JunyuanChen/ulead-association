@@ -33,11 +33,13 @@
                 <ul class="navbar-nav">
                     <%= nav_link 'Blog', articles_path %>
                     <%= nav_link 'Tags', tags_path %>
-                    <%= nav_link 'Users', users_path %>
                     <%= nav_link 'About', '/about_us' %>
                     <% if signed_in? %>
                         <%= nav_link 'New Article', new_article_path %>
                         <%= nav_link 'New Tag', new_tag_path %>
+                    <% end %>
+                    <% if this_user&.permission? :reviewer %>
+                        <%= nav_link 'Users', users_path %>
                     <% end %>
                     <% if this_user&.permission? :developer %>
                         <%= nav_link 'Resources', resources_path %>

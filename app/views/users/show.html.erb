@@ -1,7 +1,7 @@
 <% content_for :title, "User #{@user.username}" %>
 
 <h1>
-    User <span class="text-secondary"><%= @user.username %></span>
+  User <%= link_to @user.username, @user, class: 'text-secondary' %>
     <% if this_user == @user || this_user&.permission?(:admin) %>
         <%= link_to 'Edit', edit_user_path(@user), class: 'badge badge-warning' %>
         <%= link_to 'Destroy', @user,

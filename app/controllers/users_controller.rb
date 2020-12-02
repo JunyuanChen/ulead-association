@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  before_action :ensure_signed_in!, except: %i[index new create show sign_in do_sign_in do_sign_out]
+  before_action :ensure_signed_in!, except: %i[new create sign_in do_sign_in do_sign_out]
+  before_action :ensure_reviewer!, only: :index
   before_action :ensure_admin!, only: %i[update_permission destroy]
   before_action :set_user, except: %i[index new create sign_in do_sign_in do_sign_out]
+  before_action :ensure_reviewer_or_owner!, only: :show
   before_action :ensure_admin_or_owner!, only: %i[edit update_password]
 
   # GET /users
@@ -119,6 +121,13 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find params[:id]
+  end
+
+  # Call `no_permission' unless this user is a reviewer or is the user
+  def ensure_reviewer_or_owner!
+    return if this_user == @user || this_user.permission?(:reviewer)
+
+    no_permission
   end
 
   # Call `no_permission' unless this user is an admin or is the user
