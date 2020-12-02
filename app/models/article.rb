@@ -20,6 +20,8 @@ class Article < ApplicationRecord
     end
   end)
 
+  self.per_page = 10
+
   def approved?
     approver.present?
   end
