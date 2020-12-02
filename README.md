@@ -1,7 +1,7 @@
 # ulead-association
 This is the software that powers https://www.ulead-association.org/
 
-# First time server setup
+## First time server setup
 ```sh
 export RAILS_ENV=production
 bundle install --without development test
@@ -11,14 +11,14 @@ rails assets:precompile
 rails server -d
 ```
 
-# Development setup
+## Development setup
 ```sh
 bundle install
 yarn install
 rails server
 ```
 
-# DB seeding
+## DB seeding
 To create one user for each permission level, run the following in the rails console.
 ```ruby
 User.permissions.each do |permission, _id|
@@ -31,7 +31,7 @@ end
 
 With `faker` gem one can easily generate nonsense articles and tags with `Faker::Lorem`.
 
-# Architecture
+## Architecture
 The site consists three basic building blocks (for now) - articles, tags and users.
 
 An article has an author, an approver and a boolean status `hidden`. When an article
