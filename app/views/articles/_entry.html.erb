@@ -1,5 +1,5 @@
 <div class="alert <%= article.bg_color %>">
-    <h3 style="color:#003377"><%= link_to article.title, article %></h3>
+    <h3><%= link_to article.title, article, style: 'color:#003377' %></h3>
 
     <div class="text-muted">
         <%== article.summary %>
