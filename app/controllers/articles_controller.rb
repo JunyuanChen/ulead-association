@@ -7,7 +7,13 @@ class ArticlesController < ApplicationController
 
   # GET /articles
   def index
-    @articles = Article.ordered.viewable_by(this_user).paginate page: params[:page]
+    @articles = Article.ordered
+                       .viewable_by(this_user)
+                       .includes(:tags)
+                       .includes_if(this_user&.permission?(:reviewer),
+                                    :author,
+                                    :approver)
+                       .paginate(page: params[:page])
   end
 
   # GET /articles/new

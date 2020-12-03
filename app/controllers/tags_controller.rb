@@ -37,7 +37,14 @@ class TagsController < ApplicationController
 
   # GET /tags/:id
   def show
-    @articles = @tag.articles.ordered.viewable_by(this_user).paginate page: params[:page]
+    @articles = @tag.articles
+                    .ordered
+                    .viewable_by(this_user)
+                    .includes(:tags)
+                    .includes_if(this_user&.permission?(:reviewer),
+                                 :author,
+                                 :approver)
+                    .paginate(page: params[:page])
   end
 
   # GET /tags/:id/edit

@@ -10,6 +10,7 @@ class Article < ApplicationRecord
   before_save :render_markdown
 
   scope :ordered, -> { order(id: :desc) }
+  scope :includes_if, ->(really, *what) { really ? includes(*what) : all }
   scope :viewable_by, (lambda do |user|
     if user&.permission? :admin
       all
@@ -24,7 +25,7 @@ class Article < ApplicationRecord
   self.per_page = 10
 
   def approved?
-    approver.present?
+    !!approver_id
   end
 
   def bg_color
