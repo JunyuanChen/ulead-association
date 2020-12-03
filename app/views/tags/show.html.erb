@@ -1,6 +1,6 @@
 <% content_for :title, "Tag ##{@tag.name}" %>
 
-<h1>Tag <%= render 'tag', tag: @tag %></h1>
+<h1>Tag <%= render 'tag', tag: @tag, cached: true %></h1>
 <% if @tag.description.blank? %>
     <p class="text-muted font-italic">There is no description for this tag... yet!</p>
 <% else %>

@@ -18,7 +18,7 @@
             <% @tags.each do |tag| %>
                 <tr>
                     <th scope="row"><%= tag.id %></th>
-                    <td><%= render 'tag', tag: tag %></td>
+                    <td><%= render 'tag', tag: tag, cached: true %></td>
                     <td>
                         <% if tag.description.blank? %>
                             <span class="text-muted font-italic">

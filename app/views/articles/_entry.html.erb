@@ -5,7 +5,7 @@
         <%== article.summary %>
     </div>
 
-    <%= render article.tags %>
+    <%= render article.tags, cached: true %>
     <% if this_user&.can_edit? article %>
         <%= link_to 'Edit Tags', edit_tags_path(article) %>
     <% end %>
@@ -26,7 +26,7 @@
             <% end %>
         </span>
         <% if this_user&.can_edit? article %>
-            <%= render 'articles/actions', article: article %>
+            <%= render 'articles/actions', article: article, cached: true %>
         <% end %>
     </div>
 
