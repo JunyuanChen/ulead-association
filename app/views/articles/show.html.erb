@@ -4,9 +4,7 @@
     <%= link_to @article.title, @article, class: 'article-title' %>
 </h1>
 
-<% @tags.each do |tag| %>
-    <%= render 'tags/tag', tag: tag %>
-<% end %>
+<%= render @tags %>
 <% if this_user&.can_edit? @article %>
     <%= link_to 'Edit Tags', edit_tags_path(@article) %>
 <% end %>

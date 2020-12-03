@@ -5,9 +5,7 @@
         <%== article.summary %>
     </div>
 
-    <% article.tags.ordered.each do |tag| %>
-        <%= render 'tags/tag', tag: tag %>
-    <% end %>
+    <%= render article.tags %>
     <% if this_user&.can_edit? article %>
         <%= link_to 'Edit Tags', edit_tags_path(article) %>
     <% end %>

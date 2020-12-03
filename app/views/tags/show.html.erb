@@ -15,9 +15,7 @@
 <% end %>
 <hr />
 
-<% @articles.each do |article| %>
-    <%= render 'articles/entry', article: article %>
-<% end %>
+<%= render partial: 'articles/entry', collection: @articles, as: :article %>
 
 <% if @articles.any? %>
     <%= will_paginate @articles %>

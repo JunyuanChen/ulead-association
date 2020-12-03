@@ -1,6 +1,4 @@
-<% @articles.each do |article| %>
-    <%= render 'entry', article: article %>
-<% end %>
+<%= render partial: 'entry', collection: @articles, as: :article %>
 
 <% if @articles.any? %>
     <%= will_paginate %>
