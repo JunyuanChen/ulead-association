@@ -38,8 +38,8 @@ class Article < ApplicationRecord
     end
   end
 
-  def primary_date
-    (approved? ? published_at : created_at).to_date
+  def primary_time
+    approved? ? published_at : created_at
   end
 
   private
