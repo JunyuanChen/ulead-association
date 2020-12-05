@@ -38,6 +38,10 @@ class Article < ApplicationRecord
     end
   end
 
+  def primary_date
+    (approved? ? published_at : created_at).to_date
+  end
+
   private
 
   def render_markdown

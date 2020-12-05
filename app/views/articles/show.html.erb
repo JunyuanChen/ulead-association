@@ -11,7 +11,7 @@
 
 <div class="d-flex justify-content-between">
     <span>
-        <%= @article.created_at.to_date.inspect %>
+        <%= @article.primary_date.inspect %>
         <% if this_user&.permission? :reviewer %>
             &bull; By <%= link_to @article.author.username, @article.author %>
             <% if @article.approved? %>
@@ -19,7 +19,7 @@
                 <%= link_to @article.approver.username, @article.approver %>
             <% end %>
         <% end %>
-        <% if @article.updated_at != @article.created_at %>
+        <% if @article.updated_at != @article.published_at %>
             <br />
             Last update <%= @article.updated_at.to_date.inspect %>
         <% end %>
