@@ -42,6 +42,10 @@ class Article < ApplicationRecord
     approved? ? published_at : created_at
   end
 
+  def updated?
+    updated_at - primary_time > 5.minutes
+  end
+
   private
 
   def render_markdown

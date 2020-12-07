@@ -19,7 +19,7 @@
                 <%= link_to @article.approver.username, @article.approver %>
             <% end %>
         <% end %>
-        <% if @article.updated_at != @article.primary_time %>
+        <% if @article.updated? %>
             <br />
             Last update <%= @article.updated_at.to_date.inspect %>
         <% end %>
