@@ -75,7 +75,7 @@ class ArticlesController < ApplicationController
 
   # PATCH /articles/:id/approve
   def approve
-    if @article.update approver: this_user
+    if @article.update approver: this_user, published_at: Time.now
       flash[:success] = "Approved article #{@article.title}."
     else
       flash[:danger] = "Failed to approve the article: #{@article.errors.full_messages.first}."
