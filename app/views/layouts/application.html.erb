@@ -58,18 +58,16 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container mt-3">
             <% flash.each do |type, msg| %>
-                <p>
-                    <div class="alert alert-dismissible alert-<%= css_alert?(type) ? type : 'info' %>">
-                        <%= msg %>
-                    </div>
-                </p>
+                <div class="alert alert-dismissible alert-<%= css_alert?(type) ? type : 'info' %>">
+                    <%= msg %>
+                </div>
             <% end %>
         </div>
         <% flash.clear %>
 
-        <div class="container main-content">
+        <div class="container main-content mt-3">
             <%= yield %>
         </div>
 
