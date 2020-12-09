@@ -19,12 +19,12 @@
 </p>
 <%= bootstrap_form_with model: @article, local: true do |form| %>
     <div class="input-group">
-        <%= form.text_field :title, wrapper: false, class: 'no-border input-underline', label_as_placeholder: true %>
+        <%= form.text_field :title, wrapper: false, class: 'no-border input-underline text-monospace', label_as_placeholder: true %>
         <div class="input-group-btn">
             <%= form.submit 'Save' %>
         </div>
     </div>
-    <%= form.text_area :body, class: 'no-border auto-resize paste-file-upload', hide_label: true %>
+    <%= form.text_area :body, class: 'no-border editor-textarea text-monospace paste-file-upload', hide_label: true %>
 <% end %>
 
 <input id="file_upload_tag" type="file" class="sr-only" />

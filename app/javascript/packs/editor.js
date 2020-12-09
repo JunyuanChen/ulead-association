@@ -44,7 +44,7 @@ function downSizeFile(file, callback) {
 }
 
 $(document).on('turbolinks:load', () => {
-    $('.auto-resize').each(function () {
+    $('.editor-textarea').each(function () {
         resizeTextarea(this)
     }).on('input', function () {
         resizeTextarea(this)
