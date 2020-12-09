@@ -1,4 +1,5 @@
 import Compressor from 'compressorjs'
+import tabOverride from 'taboverride'
 
 function resizeTextarea(area) {
     area.style.height = area.scrollHeight + 'px'
@@ -44,8 +45,11 @@ function downSizeFile(file, callback) {
 }
 
 $(document).on('turbolinks:load', () => {
+    tabOverride.tabSize(2);
+
     $('.editor-textarea').each(function () {
         resizeTextarea(this)
+        tabOverride.set(this)
     }).on('input', function () {
         resizeTextarea(this)
     })
