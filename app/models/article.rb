@@ -64,7 +64,14 @@ class Article < ApplicationRecord
                                        highlight: true,
                                        quote: true,
                                        footnotes: true
-    rendered_fragment = Loofah.fragment markdown.render(body)
+    recursive = Loofah::Scrubber.new do |node|
+      next unless node.name == 'markdown'
+
+      node.name = 'div'
+      node.inner_html = markdown.render node.inner_html
+    end
+
+    rendered_fragment = Loofah.fragment(markdown.render(body)).scrub!(recursive)
     self.rendered = rendered_fragment.scrub!(:strip).to_s
     self.summary = rendered_fragment.to_text.truncate(256).split("\n").join(' ')
   end
