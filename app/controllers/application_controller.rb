@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def this_user
     return nil unless session[:user_id].present?
 
-    User.where(id: session[:user_id]).first
+    @this_user || @this_user = User.where(id: session[:user_id]).first
   end
 
   # Same as `this_user', but returns an user with
