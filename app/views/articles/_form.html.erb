@@ -14,11 +14,12 @@
 <% end %>
 
 <p class="text-muted font-italic">
-    You can use Markdown and HTML to layout your article. (<a href="/layout_article">?</a>)<br />
+    You can use Markdown and HTML to layout your article. <span>(<a href="/layout_article">?</a>)</span><br />
     To upload an image, directly paste it below or press Ctrl-Alt-u.
 </p>
 <%= bootstrap_form_with model: @article, local: true do |form| %>
     <div class="input-group">
+        <label class="sr-only" for="article_title">Title</label>
         <%= form.text_field :title, wrapper: false, class: 'no-border input-underline text-monospace', label_as_placeholder: true %>
         <div class="input-group-btn">
             <%= form.submit 'Save' %>
@@ -27,4 +28,4 @@
     <%= form.text_area :body, class: 'no-border editor-textarea text-monospace paste-file-upload', hide_label: true %>
 <% end %>
 
-<input id="file_upload_tag" type="file" class="sr-only" />
+<input id="file_upload_tag" type="file" hidden="true" />

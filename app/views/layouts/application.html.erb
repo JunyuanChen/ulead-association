@@ -20,10 +20,10 @@
     </head>
 
     <body class="bg-light">
-        <nav class="navbar navbar-dark navbar-expand-md sticky-top" style="background-color: #CC9900">
+        <nav class="navbar navbar-dark navbar-expand-md sticky-top" style="background-color: #BB8800">
             <a class="navbar-brand" href="/">
-                <%= image_pack_tag 'media/img/ulead_logo.png', width: 40, height: 40 %>
-                ULead
+                <%= image_pack_tag 'media/img/ulead_logo.png', width: 40, height: 40, alt: 'ULead Logo' %>
+                <strong>ULead</strong>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-content">
                 <span class="sr-only">Toggle Navbar</span>
@@ -61,6 +61,7 @@
         <div class="container mt-3">
             <% flash.each do |type, msg| %>
                 <div class="alert alert-dismissible alert-<%= css_alert?(type) ? type : 'info' %>">
+                    <span class="sr-only"><strong><%= type %>: </strong></span>
                     <%= msg %>
                 </div>
             <% end %>
