@@ -7,9 +7,13 @@ module ApplicationHelper
 
   def nav_link(name, path, method: :get, usr_class: '')
     content_tag :li,
-                link_to(name, path,
-                        method: method,
-                        class: "nav-link #{usr_class}"),
+                if method == :get
+                  link_to name, path, class: "nav-link #{usr_class}".strip
+                else
+                  link_to name, path,
+                          method: method,
+                          class: "nav-link #{usr_class}".strip
+                end,
                 class: 'navbar-item'
   end
 end
