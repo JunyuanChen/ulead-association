@@ -14,6 +14,7 @@ class ArticlesController < ApplicationController
                                     :author,
                                     :approver)
                        .paginate(page: params[:page])
+    fresh_when @articles
   end
 
   # GET /articles/new
@@ -35,6 +36,7 @@ class ArticlesController < ApplicationController
   # GET /articles/:id
   def show
     no_permission unless this_user!.can_view? @article
+    fresh_when @article
 
     @tags = @article.tags.ordered
   end

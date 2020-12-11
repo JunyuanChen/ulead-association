@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all.paginate page: params[:page]
+    fresh_when @users
   end
 
   # GET /users/new
@@ -30,6 +31,8 @@ class UsersController < ApplicationController
 
   # GET /users/:id
   def show
+    fresh_when @user
+
     @articles = @user.articles
                      .ordered
                      .viewable_by(this_user)

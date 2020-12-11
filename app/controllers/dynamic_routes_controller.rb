@@ -30,6 +30,7 @@ class DynamicRoutesController < ApplicationController
     not_found unless @route.present?
 
     @article = @route.article
+    fresh_when @article
   end
 
   private

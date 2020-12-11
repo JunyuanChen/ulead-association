@@ -7,6 +7,7 @@ class TagsController < ApplicationController
   # GET /tags
   def index
     @tags = Tag.all.paginate page: params[:page]
+    fresh_when @tags
   end
 
   # GET /tags/new
@@ -37,6 +38,8 @@ class TagsController < ApplicationController
 
   # GET /tags/:id
   def show
+    fresh_when @tag
+
     @articles = @tag.articles
                     .ordered
                     .viewable_by(this_user)
