@@ -1,4 +1,4 @@
-<%= render partial: 'entry', collection: @articles, as: :article %>
+<%= render partial: 'entry', collection: @articles, as: :article, cached: true %>
 
 <% if @articles.any? %>
     <%= will_paginate %>
