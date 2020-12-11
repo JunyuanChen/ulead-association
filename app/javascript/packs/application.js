@@ -3,11 +3,7 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-import 'bootstrap'
-require("@rails/ujs").start()
 require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
 
 import '../css/main.scss'
 
@@ -26,5 +22,7 @@ $(document).on('turbolinks:load', function () {
         this.remove();
     })
 
+    $('.markdown-content table:not(.style-as-is)').addClass('table table-striped table-hover')
+    $('.markdown-content table thead:not(.style-as-is)').addClass('thead-dark')
     $('.markdown-content table thead tr th:not(.style-as-is)').attr('scope', 'col')
 })
