@@ -4,7 +4,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
 
   has_many :articles, dependent: :destroy
-  has_many :approvals, class_name: 'User', foreign_key: :approver_id, dependent: :nullify
+  has_many :approvals, class_name: 'Article', foreign_key: :approver_id, dependent: :nullify
   enum permission: %i[unapproved member reviewer admin developer]
 
   def update_permission!(permission)
