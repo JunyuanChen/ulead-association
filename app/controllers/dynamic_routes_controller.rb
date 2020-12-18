@@ -8,7 +8,7 @@ class DynamicRoutesController < ApplicationController
 
   # POST /routes
   def create
-    @route = DynamicRoute.new params.permit(:path, :article_id)
+    @route = DynamicRoute.new params.require(:route).permit(:path, :article_id)
     if @route.save
       flash[:success] = "Created the route for /#{@route.path}."
     else

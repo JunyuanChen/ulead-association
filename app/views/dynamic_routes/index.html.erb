@@ -2,7 +2,8 @@
 
 <h1><%= yield :title %></h1>
 
-<%= bootstrap_form_with url: dynamic_routes_path, layout: :inline, local: true do |form| %>
+<%= bootstrap_form_with url: dynamic_routes_path, scope: :route,
+   layout: :inline, local: true do |form| %>
     <%= form.text_field :path, prepend: '/', hide_label: true %>
     &rarr;
     <%= form.text_field :article_id, hide_label: true %>

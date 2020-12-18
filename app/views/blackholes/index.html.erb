@@ -2,7 +2,8 @@
 
 <h1><%= yield :title %></h1>
 
-<%= bootstrap_form_with url: blackholes_path, layout: :inline, local: true do |form| %>
+<%= bootstrap_form_with url: blackholes_path, scope: :blackhole,
+   layout: :inline, local: true do |form| %>
     <%= form.text_field :path, prepend: '/', hide_label: true %>
     <%= form.primary 'Create' %>
 <% end %>

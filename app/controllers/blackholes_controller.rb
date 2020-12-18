@@ -8,7 +8,7 @@ class BlackholesController < ApplicationController
 
   # POST /routes/blackholes
   def create
-    @blackhole = Blackhole.new params.permit(:path)
+    @blackhole = Blackhole.new params.require(:blackhole).permit(:path)
     if @blackhole.save
       flash[:success] = "Created blackhole at /#{@blackhole.path}."
     else
