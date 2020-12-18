@@ -21,5 +21,6 @@ Rails.application.routes.draw do
   delete 'resources/:digest', to: 'resources#destroy', as: :destroy_resource, constraints: { digest: /[A-Fa-f0-9]{64}/ }
 
   resources :dynamic_routes, path: 'routes', only: %i[index create destroy]
+  resources :blackholes, path: 'routes/blackholes', only: %i[index create destroy]
   get '(*path)', to: 'dynamic_routes#display', defaults: { path: '' }
 end

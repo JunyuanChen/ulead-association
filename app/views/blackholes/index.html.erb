@@ -1,0 +1,37 @@
+<% content_for :title, 'Blackholes' %>
+
+<h1><%= yield :title %></h1>
+
+<%= bootstrap_form_with url: blackholes_path, layout: :inline, local: true do |form| %>
+    <%= form.text_field :path, prepend: '/', hide_label: true %>
+    <%= form.primary 'Create' %>
+<% end %>
+<hr />
+
+<% if @blackholes.any? %>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Path</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @blackholes.each do |blackhole| %>
+                <tr>
+                    <td>/<%= blackhole.path %></td>
+                    <td>
+                        <%= link_to 'Destroy', blackhole,
+                              method: :delete,
+                              class: 'text-danger',
+                              data: { confirm: 'Are you sure?' } %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= will_paginate @blackholes %>
+<% else %>
+    <p class="text-secondary font-italic">There is no blackholes... yet!</p>
+<% end %>

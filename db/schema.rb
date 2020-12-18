@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_04_224344) do
+ActiveRecord::Schema.define(version: 2020_12_18_153850) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 2020_12_04_224344) do
     t.integer "tag_id"
     t.index ["article_id"], name: "index_articles_tags_on_article_id"
     t.index ["tag_id"], name: "index_articles_tags_on_tag_id"
+  end
+
+  create_table "blackholes", force: :cascade do |t|
+    t.string "path", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "dynamic_routes", force: :cascade do |t|

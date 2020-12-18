@@ -49,6 +49,7 @@
                     <% if this_user&.permission? :developer %>
                         <%= nav_link 'Resources', resources_path %>
                         <%= nav_link 'Routes', dynamic_routes_path %>
+                        <%= nav_link 'Blackholes', blackholes_path %>
                     <% end %>
                 </ul>
                 <ul class="navbar-nav">

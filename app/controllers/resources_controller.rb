@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   before_action :ensure_signed_in!
   before_action :ensure_developer!, except: :upload
-  before_action :validate_digest!, only: :delete
+  before_action :validate_digest!, only: :destroy
 
   # GET /resources
   def index
