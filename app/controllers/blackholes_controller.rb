@@ -8,7 +8,17 @@ class BlackholesController < ApplicationController
 
   # GET /routes/blackholes/syslog
   def syslog
-    @log = `tail -n 1000 #{Rails.root.join('log', 'production.log')} | sed -e 's/\\x1b\\[[0-9;:]*[a-zA-Z]//g'`
+    log_file = Rails.root.join 'log', 'production.log'
+    remove_color = "sed -e 's/\\x1b\\[[0-9;:]*[a-zA-Z]//g'"
+    if params[:grep].present?
+      grep = "grep -E '#{params[:grep].tr("'", '')}' -C #{params[:context].to_i}"
+      cmd = "tail -n 10000 #{log_file} | #{remove_color} | #{grep}"
+    else
+      cmd = "tail -n 1000 #{log_file} | #{remove_color}"
+    end
+
+    Rails.logger.warn "SHELL CMD: #{cmd}"
+    @log = `#{cmd}`
   end
 
   # POST /routes/blackholes

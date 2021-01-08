@@ -1,4 +1,14 @@
 <% content_for :title, 'Production Logs' %>
 
 <h1><%= yield :title %></h1>
+
+<%= bootstrap_form_with url: syslog_path, layout: :inline,
+   method: :get, local: true do |form| %>
+    <%= form.text_field :grep, prepend: 'grep', hide_label: true,
+       placeholder: 'POSIX extended RE...' %>
+    <%= form.text_field :context, prepend: 'context', hide_label: true %>
+    <%= form.submit 'Search' %>
+<% end %>
+<hr />
+
 <pre><code><%= @log %></code></pre>
