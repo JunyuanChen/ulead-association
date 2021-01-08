@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   before_action :ensure_signed_in!
   before_action :ensure_developer!, except: :upload
-  before_action :validate_digest!, only: :destroy
+  before_action :validate_digest!, only: %i[show destroy]
 
   # GET /resources
   def index
@@ -29,6 +29,17 @@ class ResourcesController < ApplicationController
     render plain: "/rc/#{digest}"
   end
 
+  # GET /resources/:digest
+  def show
+    @digest = params[:digest]
+    @path = "/rc/#{@digest}"
+
+    real_path = Rails.root.join 'public', 'rc', @digest
+    not_found unless File.file? real_path
+
+    @size = File.size real_path
+  end
+
   # DELETE /resources/:digest
   def destroy
     path = Rails.root.join 'public', 'rc', params[:digest]
@@ -46,6 +57,7 @@ class ResourcesController < ApplicationController
   def validate_digest!
     return if /[A-Fa-f0-9]{64}/ =~ params[:digest]
 
-    flash[:danger] = "`#{params[:digest]}' is not a valid resource digest."
+    flash[:warning] = "`#{params[:digest]}' is not a valid resource digest."
+    no_permission
   end
 end

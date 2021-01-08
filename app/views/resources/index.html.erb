@@ -18,6 +18,7 @@
                     <th scope="row"><%= number_to_human_size size %></th>
                     <th scope="row"><%= size %></th>
                     <td>
+                        <%= link_to 'Show', show_resource_path(digest) %> |
                         <%= link_to 'Delete', destroy_resource_path(digest),
                          method: :delete,
                          class: 'text-danger',

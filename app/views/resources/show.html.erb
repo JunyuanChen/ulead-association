@@ -1,0 +1,16 @@
+<% content_for :title, 'Show Resource' %>
+
+<h1><%= yield :title %></h1>
+<p>
+    Digest <code><%= @digest %></code><br />
+    Size <code><%= @size %></code>
+</p>
+<%= link_to 'Delete', destroy_resource_path(@digest),
+ method: :delete,
+ class: 'text-danger',
+ data: { confirm: 'Are you sure?' } %>
+<hr />
+
+<div class="markdown-content">
+    <img src="<%= @path %>" />
+</div>

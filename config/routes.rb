@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'resources', to: 'resources#index', as: :resources
   post 'resources/upload', to: 'resources#upload'
+  get 'resources/:digest', to: 'resources#show', as: :show_resource, constraints: { digest: /[A-Fa-f0-9]{64}/ }
   delete 'resources/:digest', to: 'resources#destroy', as: :destroy_resource, constraints: { digest: /[A-Fa-f0-9]{64}/ }
 
   resources :dynamic_routes, path: 'routes', only: %i[index create destroy]
