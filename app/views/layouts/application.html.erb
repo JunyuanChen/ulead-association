@@ -47,9 +47,16 @@
                         <%= nav_link 'Users', users_path %>
                     <% end %>
                     <% if this_user&.permission? :developer %>
-                        <%= nav_link 'Resources', resources_path %>
-                        <%= nav_link 'Routes', dynamic_routes_path %>
-                        <%= nav_link 'Blackholes', blackholes_path %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                Developer
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><%= link_to 'Resources', resources_path, class: 'dropdown-item' %></li>
+                                <li><%= link_to 'Routes', dynamic_routes_path, class: 'dropdown-item' %></li>
+                                <li><%= link_to 'Blackholes', blackholes_path, class: 'dropdown-item' %></li>
+                            </ul>
+                        </li>
                     <% end %>
                 </ul>
                 <ul class="navbar-nav">
