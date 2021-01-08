@@ -6,6 +6,10 @@ class BlackholesController < ApplicationController
     @blackholes = Blackhole.all.paginate page: params[:page]
   end
 
+  def syslog
+    @log = `tail -n 1000 log/production.log | sed -e 's/\\x1b\\[[0-9;:]*[a-zA-Z]//g'`
+  end
+
   # POST /routes/blackholes
   def create
     @blackhole = Blackhole.new params.require(:blackhole).permit(:path)
