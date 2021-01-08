@@ -45,19 +45,15 @@ class DynamicRoutesController < ApplicationController
 
   def blackhole_or_not_found(path)
     if Blackhole.where(path: path).any?
-      headers = request.headers.select do |k, _v|
-        k.starts_with? 'HTTP'
-      end.map do |k, v|
-        "  #{k}: #{v}"
-      end.join("\n")
-      Rails.logger.warn("BLACKHOLED REQUEST:\n" \
-                        "  #{request.remote_ip} via #{request.ip}\n" \
-                        "  #{request.method} #{request.url}\n" \
-                        "Params:\n" \
-                        "  #{params.to_unsafe_h.inspect}\n" \
-                        "Headers:\n" \
-                        "#{headers}\n" \
-                        "=== END ===")
+      headers = request.headers.select { |k, _v| k.starts_with? 'HTTP' }
+      Rails.logger.warn 'BLACKHOLED REQUEST'
+      Rails.logger.warn "  #{request.remote_ip} via #{request.ip}"
+      Rails.logger.warn "  #{request.method} #{request.url}"
+      Rails.logger.warn "  Params: #{params.to_unsafe_h.inspect}"
+      Rails.logger.warn '  Headers:'
+      headers.each do |k, v|
+        Rails.logger.warn "    #{k}: #{v}"
+      end
       redirect_to 'https://speed.hetzner.de/10GB.bin', status: 301
     else
       not_found
