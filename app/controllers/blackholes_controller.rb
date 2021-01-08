@@ -8,7 +8,7 @@ class BlackholesController < ApplicationController
 
   # GET /routes/blackholes/syslog
   def syslog
-    @log = `tail -n 1000 log/production.log | sed -e 's/\\x1b\\[[0-9;:]*[a-zA-Z]//g'`
+    @log = `tail -n 1000 #{Rails.root.join('log', 'production.log')} | sed -e 's/\\x1b\\[[0-9;:]*[a-zA-Z]//g'`
   end
 
   # POST /routes/blackholes
