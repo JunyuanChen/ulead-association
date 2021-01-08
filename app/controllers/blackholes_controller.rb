@@ -21,6 +21,11 @@ class BlackholesController < ApplicationController
     @log = `#{cmd}`
   end
 
+  # GET /routes/blackholes/systop
+  def systop
+    @top = `top -b -n 1`
+  end
+
   # POST /routes/blackholes
   def create
     @blackhole = Blackhole.new params.require(:blackhole).permit(:path)

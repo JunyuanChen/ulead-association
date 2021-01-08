@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   resources :dynamic_routes, path: 'routes', only: %i[index create destroy]
   get 'routes/blackholes/syslog', to: 'blackholes#syslog', as: :syslog
+  get 'routes/blackholes/systop', to: 'blackholes#systop', as: :systop
   resources :blackholes, path: 'routes/blackholes', only: %i[index create destroy]
   get '(*path)', to: 'dynamic_routes#display', defaults: { path: '' }
 end
