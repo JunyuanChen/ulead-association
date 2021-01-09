@@ -1,7 +1,7 @@
 <% content_for :title, 'Sign In' %>
 <h1><%= yield :title %></h1>
 
-<%= bootstrap_form_with url: do_sign_in_path, local: true do |form| %>
+<%= bootstrap_form_with url: do_sign_in_path(return: @path), local: true do |form| %>
     <%= form.text_field :username %>
     <%= form.password_field :password %>
     <%= form.primary 'Sign In' %>

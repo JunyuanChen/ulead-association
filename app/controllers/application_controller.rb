@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     return if signed_in?
 
     flash[:info] = 'You need to sign in to continue.'
-    redirect_to sign_in_path
+    redirect_to sign_in_path return: request.path
   end
 
   # For each user permission except the first (`:unapproved'),

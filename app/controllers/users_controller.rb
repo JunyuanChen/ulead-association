@@ -88,7 +88,8 @@ class UsersController < ApplicationController
 
   # GET /users/sign_in
   def sign_in
-    redirect_to '/' if signed_in?
+    @path = params[:return]
+    redirect_to @path if signed_in?
   end
 
   # POST /users/sign_in
@@ -104,7 +105,7 @@ class UsersController < ApplicationController
       reset_session
       session[:user_id] = @user.id
       flash[:success] = "Signed in as #{@user.username}."
-      redirect_to '/'
+      redirect_to params[:return].presence || '/'
     end
   end
 
