@@ -1,1 +1,6 @@
-<%= link_to "##{tag.name}", tag, class: 'badge badge-success' %>
+<% if tag.description.present? %>
+    <%= link_to "##{tag.name}", tag, class: 'badge badge-success',
+     title: tag.description, data: { toggle: 'tooltip' } %>
+<% else %>
+    <%= link_to "##{tag.name}", tag, class: 'badge badge-success' %>
+<% end %>
