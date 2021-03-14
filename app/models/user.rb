@@ -12,7 +12,7 @@ class User < ApplicationRecord
       permission.is_a?(Symbol) || permission.is_a?(String)
 
     # This is necessary because `has_secure_password' made it impossible to use #update.
-    ActiveRecord::Base.connection.exec_update('UPDATE `users` SET `permission` = ?, `updated_at` = ? WHERE `id` = ?',
+    ActiveRecord::Base.connection.exec_update('UPDATE "users" SET "permission" = ?, "updated_at" = ? WHERE "id" = ?',
                                               'Permission Update',
                                               [[nil, User.permissions[permission]],
                                                [nil, Time.now],
