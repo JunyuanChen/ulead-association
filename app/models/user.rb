@@ -38,7 +38,9 @@ class User < ApplicationRecord
   end
 
   def can_edit?(article)
-    if article.hidden?
+    if article.raw?
+      permission? :developer
+    elsif article.hidden?
       permission? :admin
     elsif article.approved?
       permission? :reviewer

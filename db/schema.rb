@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_21_000431) do
+ActiveRecord::Schema.define(version: 2021_03_25_002446) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -23,7 +23,8 @@ ActiveRecord::Schema.define(version: 2020_12_21_000431) do
     t.integer "approver_id"
     t.boolean "hidden", default: false, null: false
     t.datetime "published_at", precision: 6
-    t.index ["id"], name: "index_articles_on_id", order: :desc
+    t.boolean "raw", default: false, null: false
+    t.index ["id"], name: "index_articles_on_id"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 

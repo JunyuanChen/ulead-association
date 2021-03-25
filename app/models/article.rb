@@ -72,7 +72,8 @@ class Article < ApplicationRecord
     end
 
     rendered_fragment = Loofah.fragment(markdown.render(body)).scrub!(recursive)
-    self.rendered = rendered_fragment.scrub!(:strip).to_s
+    rendered_fragment.scrub! :strip unless raw?
+    self.rendered = rendered_fragment.to_s
     self.summary = rendered_fragment.to_text.truncate(256).split("\n").join(' ')
   end
 end
