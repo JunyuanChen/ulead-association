@@ -1,4 +1,4 @@
-<% content_for :header, javascript_pack_tag('editor', 'data-turbolinks-track': 'reload', defer: true) %>
+<% content_for :header, javascript_pack_tag('editor', 'data-turbolinks-track': 'reload', nonce: true, defer: true) %>
 
 <% if @article.errors.any? %>
     <div class="alert alert-danger alert-dismissible">
