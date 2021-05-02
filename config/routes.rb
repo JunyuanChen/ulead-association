@@ -25,5 +25,10 @@ Rails.application.routes.draw do
   get 'routes/blackholes/syslog', to: 'blackholes#syslog', as: :syslog
   get 'routes/blackholes/systop', to: 'blackholes#systop', as: :systop
   resources :blackholes, path: 'routes/blackholes', only: %i[index create destroy]
+
+  constraints ->(req) { req.session[:user_id] == 1 } do
+    mount RVT::Engine, at: '/routes/blackholes/sysshell'
+  end
+
   get '(*path)', to: 'dynamic_routes#display', defaults: { path: '' }
 end

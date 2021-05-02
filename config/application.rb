@@ -11,6 +11,13 @@ module Ulead
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    config.allow_concurrency = true
+
+    config.rvt.whitelisted_ips = '0.0.0.0/0'
+    config.rvt.automount = false
+    config.rvt.command = '/bin/bash'
+    config.rvt.timeout = 45.seconds
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

@@ -32,6 +32,7 @@ gem 'bootstrap_form', '~> 4.5'
 gem 'redcarpet', '~> 3.5'
 gem 'will_paginate', '~> 3.3'
 gem 'will_paginate-bootstrap4', '~> 0.2'
+gem 'rvt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
